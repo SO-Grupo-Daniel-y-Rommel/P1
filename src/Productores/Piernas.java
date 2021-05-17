@@ -1,11 +1,13 @@
 package Productores;
 
+import java.util.concurrent.Semaphore;
+
 /**
  *
  * @author Daniel & Rommel
  */
 public class Piernas extends Productor {
-    public Piernas() {
-        super("Piernas", 36, 1/2);
+    public Piernas(Semaphore semaforo) {
+        super("Piernas", 36, 1f/2, semaforo);
     }
 }
