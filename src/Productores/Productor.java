@@ -1,5 +1,6 @@
 package Productores;
 
+import P1.Mattel;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,16 +11,17 @@ import java.util.logging.Logger;
  */
 public abstract class Productor extends Thread {
     
-    public String producto;    
-    public int almacenamiento;
-    public float producto_por_dia;
+    public int almacen;      // Almacen de este producto (buffer)
+    public int capacidad;           // Capacidad maxima de almacen
+    public float tiempo_producir;   // Tiempo necesario para producir (ms)
     
     private Semaphore semaforo;
     
-    public Productor(String producto, int almacenamiento, float producto_por_dia, Semaphore semaforo) {
-        this.producto = producto;
-        this.almacenamiento = almacenamiento;
-        this.producto_por_dia = producto_por_dia;
+    public Productor(int almacen, int capacidad, float producto_por_dia, Semaphore semaforo) {
+        this.almacen = almacen;
+        this.capacidad = capacidad;
+        this.tiempo_producir = (Mattel.segundos_por_dia * (1/producto_por_dia)) * 1000;
+        
         this.semaforo = semaforo;
     }
     

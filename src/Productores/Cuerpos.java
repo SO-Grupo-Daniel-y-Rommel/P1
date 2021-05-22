@@ -1,5 +1,6 @@
 package Productores;
 
+import P1.Mattel;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -8,6 +9,11 @@ import java.util.concurrent.Semaphore;
  */
 public class Cuerpos extends Productor {
     public Cuerpos(Semaphore semaforo) {
-        super("Cuerpos", 15, 1f/3, semaforo);
+        super(
+            Mattel.almacen_cuerpos,         // Buffer
+            Mattel.capacidades_almacen[3],  // Capacidad
+            Mattel.productos_por_dia[3],    // Producto/dia
+            semaforo
+        );
     }
 }

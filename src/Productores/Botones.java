@@ -1,5 +1,6 @@
 package Productores;
 
+import P1.Mattel;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -8,6 +9,11 @@ import java.util.concurrent.Semaphore;
  */
 public class Botones extends Productor {
     public Botones(Semaphore semaforo) {
-        super("Botones", 60, 4f, semaforo);
+        super(
+            Mattel.almacen_botones,         // Buffer
+            Mattel.capacidades_almacen[0],  // Capacidad
+            Mattel.productos_por_dia[0],    // Producto/dia
+            semaforo
+        );
     }
 }
