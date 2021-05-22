@@ -4,6 +4,7 @@ import Consumidores.Ensamblador;
 import Productores.Productor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Mattel {
      * i = 1 -> Brazos
      * i = 2 -> Piernas
      * i = 3 -> Cuerpos
-     */ // NOTA: esto lo podemos cambiar para que sea un int por porductor si quieres
+     */
     public static int[] capacidades_almacen = new int[4];
     public static int[] cantidad_productores = new int[4];
     public static int[] capacidades_productores = new int[4];
@@ -40,6 +41,7 @@ public class Mattel {
     public static List<Ensamblador> ensambladores;
     
     public static void main(String[] args) {
+        
         
         // Valores Iniciales:
         // TODO: inizializar estos datos via archivo de texto
@@ -73,8 +75,21 @@ public class Mattel {
         Mattel.capacidades_productores[3] = 4;
         Mattel.productos_por_dia[3] = 4f;
         
-        // TODO: creacion de semaforos
+        // Inizilizacion de Semaforos
+        Semaphore[] semaforos_exclusion = new Semaphore[4];   // Para asegurar exclusion mutua al modiciar cantidadades almacen
+        for (int i = 0; i < semaforos_exclusion.length; i++) {
+            semaforos_exclusion[i] = new Semaphore(1);
+        }
         
+        Semaphore[] semaforos_productor = new Semaphore[4];   // Para saber cuantos espacios en cada almacen estan disponibles
+        for (int i = 0; i < semaforos_productor.length; i++) {
+            semaforos_productor[i] = new Semaphore(0);
+        }
+        
+        Semaphore[] semaforos_consumidor = new Semaphore[4];  // Para saber cuantos espacios en cada almacen estan ocupados
+        for (int i = 0; i < semaforos_consumidor.length; i++) {
+            semaforos_consumidor[i] = new Semaphore(Mattel.capacidades_almacen[i]);
+        }
         
         // TODO: Fill los arreglos con los productores iniciales
         // NOTA: no le pongo size porque prefiero hacer las validaciones al momento que queremos agregar elemento
