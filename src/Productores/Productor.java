@@ -2,7 +2,9 @@ package Productores;
 
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
+import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 
 /**
  *
@@ -33,7 +35,7 @@ public abstract class Productor extends Thread {
                 this.semaforo.release();
                 
             } catch(InterruptedException ex) {
-                Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
+                getLogger(Productor.class.getName()).log(SEVERE, null, ex);
             }
         }
     }
