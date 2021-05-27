@@ -11,36 +11,31 @@ import java.util.logging.Logger;
  */
 public abstract class Productor extends Thread {
     
-    public int almacen;             // Almacen de este producto (buffer)
-    public int capacidad;           // Capacidad maxima de almacen
     public long tiempo_producir;    // Tiempo necesario para producir (ms)
-    
-    // Variables para debug
-    public int indice;              // Para saber quien y cuendo un productor actua
     
     // Referencias a semaforos
     private Semaphore semaforo_exclusion;   // Para asegurar exclusion mutua al modiciar cantidad almacen
     private Semaphore semaforo_productor;   // Para saber cuantos espacios en almacen estan disponibles
     private Semaphore semaforo_consumidor;  // Para saber cuantos espacios en almacen estan ocupados
     
-    public Productor(int indice, int almacen, int capacidad, float producto_por_dia, Semaphore Se, Semaphore Sp, Semaphore Sc) {
-        this.indice = indice;
-        
-        this.almacen = almacen;
-        this.capacidad = capacidad;
+    public Productor(int indice) {
+
         // NOTA: la funcion sleep toma un long, estoy rounding up los ms y casting a long
-        this.tiempo_producir = (long) Math.ceil((Mattel.segundos_por_dia * (1/producto_por_dia)) * 1000);
+        this.tiempo_producir = (long) Math.ceil(
+            Mattel.segundos_por_dia * (1000/Mattel.productos_por_dia[indice])
+        );
         
-        this.semaforo_exclusion = Se;
-        this.semaforo_productor = Sp;
-        this.semaforo_consumidor = Sc;
+        this.semaforo_exclusion = Mattel.semaforos_exclusion[indice];
+        this.semaforo_productor = Mattel.semaforos_productor[indice];
+        this.semaforo_consumidor = Mattel.semaforos_consumidor[indice];
     }
     
     @Override
     public void run() {
         while(true) {
             try{
-                // Produciendo...
+                
+                // Produciendo... / Durmiendo
                 Thread.sleep(this.tiempo_producir);
                 
                 // Seccion Entrada
@@ -48,7 +43,7 @@ public abstract class Productor extends Thread {
                 this.semaforo_exclusion.acquire();      // Queremos entrar a SC
                 
                 // Seccion Critica
-                this.producir();
+                this.almacenar();
                 
                 // Seccion Salida
                 this.semaforo_exclusion.release();      // Se sale de de SC
@@ -60,7 +55,6 @@ public abstract class Productor extends Thread {
         }
     }
     
-    private void producir() {
-        this.almacen += 1;
-    }
+    // Metodos abstractos
+    protected abstract void almacenar();
 }
