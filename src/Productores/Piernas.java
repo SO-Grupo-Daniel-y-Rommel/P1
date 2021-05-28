@@ -1,13 +1,17 @@
 package Productores;
 
-import java.util.concurrent.Semaphore;
+import P1.Mattel;
 
 /**
  *
  * @author Daniel & Rommel
  */
 public class Piernas extends Productor {
-    public Piernas(Semaphore semaforo) {
-        super("Piernas", 36, 1f/2, semaforo);
+    public Piernas() {
+        super(Mattel.BUFFER.PIERNA.INDICE);
+    }
+    
+    protected void almacenar() {
+        Mattel.almacen_piernas += 1;
     }
 }

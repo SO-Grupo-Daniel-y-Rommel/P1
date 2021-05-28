@@ -1,13 +1,18 @@
 package Productores;
 
-import java.util.concurrent.Semaphore;
+import P1.Mattel;
 
 /**
  *
  * @author Daniel & Rommel
  */
 public class Botones extends Productor {
-    public Botones(Semaphore semaforo) {
-        super("Botones", 60, 4f, semaforo);
+    public Botones() {
+        super(Mattel.BUFFER.BOTON.INDICE);
+    }
+    
+    protected void almacenar() {
+        Mattel.almacen_botones += 1;
+        System.out.println("almacen de botones" + Mattel.almacen_botones);
     }
 }

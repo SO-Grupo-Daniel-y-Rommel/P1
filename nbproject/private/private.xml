@@ -2,6 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/C:/Users/Daniel/UNIMET/Sistemas%20Operativos/Proyecto1/src/Productores/Brazos.java</file>
+            <file>file:/C:/Users/Daniel/UNIMET/Sistemas%20Operativos/Proyecto1/src/Productores/Cuerpos.java</file>
+            <file>file:/C:/Users/Daniel/UNIMET/Sistemas%20Operativos/Proyecto1/src/Productores/Botones.java</file>
+            <file>file:/C:/Users/Daniel/UNIMET/Sistemas%20Operativos/Proyecto1/src/Productores/Productor.java</file>
+            <file>file:/C:/Users/Daniel/UNIMET/Sistemas%20Operativos/Proyecto1/src/Productores/Piernas.java</file>
+            <file>file:/C:/Users/Daniel/UNIMET/Sistemas%20Operativos/Proyecto1/src/P1/Mattel.java</file>
+            <file>file:/C:/Users/Daniel/UNIMET/Sistemas%20Operativos/Proyecto1/src/Consumidores/Ensamblador.java</file>
+        </group>
+>>>>>>> e4b0723e1e8eb240ac342735be50eeedd1ad0aae
     </open-files>
 </project-private>
