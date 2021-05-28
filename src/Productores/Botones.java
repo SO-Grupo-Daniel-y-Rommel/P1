@@ -13,6 +13,5 @@ public class Botones extends Productor {
     
     protected void almacenar() {
         Mattel.almacen_botones += 1;
-        System.out.println("almacen de botones" + Mattel.almacen_botones);
     }
 }
