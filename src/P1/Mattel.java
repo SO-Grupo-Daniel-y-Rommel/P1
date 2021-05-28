@@ -81,21 +81,28 @@ public class Mattel {
 
 
         
-//        var frame1=new Inicio();
-//        frame1.setVisible(true);
-//        String data=Lectura_Txt();
-//        System.out.println(data);
+        var frame1=new Inicio();
+        frame1.setVisible(true);
         
         
 //        =================================================================
  
+   
+    }
+
+    
+    public static void simulacion(){
+        
+        String data=Lectura_Txt();
+        System.out.println(data);
+        String [] info=data.split(",");
+        
         
         // Valores Iniciales:
-        // TODO: inizializar estos datos via archivo de texto
-        Mattel.segundos_por_dia = 5;
+        Mattel.segundos_por_dia = Integer.parseInt(info[5]);
         Mattel.dias_entre_despachos = 10;
 
-        Mattel.cantidad_ensambladores = 2;
+        Mattel.cantidad_ensambladores = Integer.parseInt(info[4]);
         Mattel.capacidad_ensambladores = 5;
         Mattel.dias_para_asemblar = 1f;
         
@@ -104,7 +111,7 @@ public class Mattel {
         
         // Para Boton i = 0
         indice = BUFFER.BOTON.INDICE;
-        Mattel.cantidad_productores[indice] = 2;
+        Mattel.cantidad_productores[indice] = Integer.parseInt(info[3]);
         Mattel.capacidad_almacenes[indice] = 60;
         Mattel.capacidad_productores[indice] = 4;
         Mattel.productos_por_dia[indice] = 4f;
@@ -112,7 +119,7 @@ public class Mattel {
         
         // Para Brazos i = 1
         indice = BUFFER.BRAZO.INDICE;
-        Mattel.cantidad_productores[indice] = 4;
+        Mattel.cantidad_productores[indice] = Integer.parseInt(info[1]);
         Mattel.capacidad_almacenes[indice] = 40;
         Mattel.capacidad_productores[indice] = 5;
         Mattel.productos_por_dia[indice] = 1f;
@@ -120,7 +127,7 @@ public class Mattel {
         
         // Para Piernas i = 2
         indice = BUFFER.PIERNA.INDICE;
-        Mattel.cantidad_productores[indice] = 2;
+        Mattel.cantidad_productores[indice] = Integer.parseInt(info[0]);
         Mattel.capacidad_almacenes[indice] = 36;
         Mattel.capacidad_productores[indice] = 4;
         Mattel.productos_por_dia[indice] = 1f/2;
@@ -128,7 +135,7 @@ public class Mattel {
         
         // Para Cuerpos i = 3
         indice = BUFFER.CUERPO.INDICE;
-        Mattel.cantidad_productores[indice] = 5;
+        Mattel.cantidad_productores[indice] = Integer.parseInt(info[2]);
         Mattel.capacidad_almacenes[indice] = 15;
         Mattel.capacidad_productores[indice] = 4;
         Mattel.productos_por_dia[indice] = 1f/3;
@@ -185,8 +192,7 @@ public class Mattel {
         
         
     }
-}
-    
+    }
     
     public static String Lectura_Txt(){
                 //ARCHIVO DE TEXTO DE LA FORMA:
@@ -199,7 +205,7 @@ public class Mattel {
 
         
         	// Fichero del que queremos leer
-		var fichero = new File("C:\\Users\\DELL\\Desktop\\TRIMESTRES METROPOLITANA\\10MO TRIMESTRE\\SO\\Proyecto1\\src\\P1\\Data.txt");
+		var fichero = new File("src\\P1\\Data.txt");
 		Scanner s = null;
                    
 		try {
@@ -271,7 +277,7 @@ public class Mattel {
 		try {
 
             // Escribimos linea a linea en el fichero
-            try (var fichero = new FileWriter("C:\\Users\\DELL\\Desktop\\TRIMESTRES METROPOLITANA\\10MO TRIMESTRE\\SO\\Proyecto1\\src\\P1\\Data.txt")) {
+            try (var fichero = new FileWriter("src\\P1\\Data.txt")) {
                 var flag = true;
                 for (String value1 : value) {
                     if (value1.matches("[+-]?\\d*(\\.\\d+)?")) {
@@ -300,7 +306,7 @@ public class Mattel {
     
     public static void cargar_data_default_txt(){
         
-        Escritura_Txt("5","4", "2", "4", "3", "2");
+        Escritura_Txt("4","5", "4", "4", "5", "2");
         
     }
 }

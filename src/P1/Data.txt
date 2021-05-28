@@ -1,6 +1,6 @@
-Productores de piernas=5
-Productores de brazos=4
-Productores de cuerpo central=2
+Productores de piernas=4
+Productores de brazos=5
+Productores de cuerpo central=4
 Productores de botones=4
-Ensambladores=3
+Ensambladores=5
 Tiempo=2

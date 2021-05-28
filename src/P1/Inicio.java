@@ -11,6 +11,7 @@ import static P1.Mattel.cargar_data_default_txt;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import P1.info;
+import P1.Mattel;
 
 /**
  *
@@ -23,9 +24,11 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
+        
+        setLocationRelativeTo(null);
     }
     public void validar_solo_operadores_operandos(java.awt.event.KeyEvent evento) {//Método para validar solo números
-        if (!(evento.getKeyChar() >=48) || !(evento.getKeyChar() <=57 )) {
+        if (!(evento.getKeyChar() >=48 || evento.getKeyChar()==8) || !(evento.getKeyChar() <=57 || evento.getKeyChar()==127 )) {
             evento.consume();
                 JOptionPane.showMessageDialog(this, "Solo numeros.");
         }
@@ -345,18 +348,56 @@ public class Inicio extends javax.swing.JFrame {
         String p_botones=this.textField4.getText();
         String ensambladores=this.textField5.getText();
         String tiempo=this.textField6.getText();
-        Escritura_Txt(p_piernas,p_brazos,p_cuerpoC,p_botones,ensambladores,tiempo);
-        
-        String data= Lectura_Txt();
-        String [] info=data.split(",");
-        
-        this.textField1.setText(info[0]);
-        this.textField2.setText(info[1]);
-        this.textField3.setText(info[2]);
-        this.textField4.setText(info[3]);
-        this.textField5.setText(info[4]);
-        this.textField6.setText(info[5]);
+        if(
+            textField1.getText().isBlank() || 
+            textField2.getText().isBlank() || 
+            textField3.getText().isBlank() ||
+            textField4.getText().isBlank() ||
+            textField5.getText().isBlank()
+                                
+                ){
+            
+            JOptionPane.showMessageDialog(this, "Para setear la data debes rellenar todos los campos");
+        }else{
+            int max_prod_btn=4;
+            int max_prod_brz=5;
+            int max_prod_pier=4;
+            int max_prod_cuerC=4;
+            int max_ensmb=5;
 
+            String defaultText="";
+            String[] prob= {
+                            "La empresa solo puede costear maximo 4 productores de botones\n",
+                            "La empresa solo puede costear maximo 5 productores de brazos\n",
+                            "La empresa solo puede costear maximo 4 productores de piernas\n",
+                            "La empresa solo puede costear maximo 4 productores de cuerpo central\n",
+                            "La empresa solo puede costrear maximo 5 ensambladores\n"
+                            };
+            if(Integer.parseInt(textField1.getText())> max_prod_pier){ defaultText+=prob[2];}
+            if(Integer.parseInt(textField2.getText())> max_prod_brz){ defaultText+=prob[1];}
+            if(Integer.parseInt(textField3.getText())> max_prod_cuerC){ defaultText+=prob[3];}
+            if(Integer.parseInt(textField4.getText())> max_prod_btn){ defaultText+=prob[0];}
+            if(Integer.parseInt(textField5.getText())> max_ensmb){ defaultText+=prob[4];}
+            if(!defaultText.isBlank()){
+                JOptionPane.showMessageDialog(this, defaultText);
+        
+            }else{
+                Escritura_Txt(p_piernas,p_brazos,p_cuerpoC,p_botones,ensambladores,tiempo);
+        
+            String data= Lectura_Txt();
+            String [] info=data.split(",");
+        
+            this.textField1.setText(info[0]);
+            this.textField2.setText(info[1]);
+            this.textField3.setText(info[2]);
+            this.textField4.setText(info[3]);
+            this.textField5.setText(info[4]);
+            this.textField6.setText(info[5]);
+
+            }
+            
+        }
+        
         
         
         
@@ -411,9 +452,50 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         System.out.println("Empezar simulacion");
-        this.setVisible(false);
-        info v = new info();
-        v.setVisible(true);
+        
+        int max_prod_btn=4;
+        int max_prod_brz=5;
+        int max_prod_pier=4;
+        int max_prod_cuerC=4;
+        int max_ensmb=5;
+        
+        String defaultText="";
+        String[] prob= {
+                        "La empresa solo puede costear maximo 4 productores de botones\n",
+                        "La empresa solo puede costear maximo 5 productores de brazos\n",
+                        "La empresa solo puede costear maximo 4 productores de piernas\n",
+                        "La empresa solo puede costear maximo 4 productores de cuerpo central\n",
+                        "La empresa solo puede costrear maximo 5 ensambladores\n"
+                        };
+        
+        if(
+            textField1.getText().isBlank() || 
+            textField2.getText().isBlank() || 
+            textField3.getText().isBlank() ||
+            textField4.getText().isBlank() ||
+            textField5.getText().isBlank()
+                                
+                ){
+            
+            JOptionPane.showMessageDialog(this, "No se ha cargado correctamente la informacion necesario para empezar la simulacion.");
+        }else{
+            if(Integer.parseInt(textField1.getText())> max_prod_pier){ defaultText+=prob[2];}
+            if(Integer.parseInt(textField2.getText())> max_prod_brz){ defaultText+=prob[1];}
+            if(Integer.parseInt(textField3.getText())> max_prod_cuerC){ defaultText+=prob[3];}
+            if(Integer.parseInt(textField4.getText())> max_prod_btn){ defaultText+=prob[0];}
+            if(Integer.parseInt(textField5.getText())> max_ensmb){ defaultText+=prob[4];}
+            if(!defaultText.isBlank()){
+                JOptionPane.showMessageDialog(this, defaultText);
+        
+            }else{
+                this.setVisible(false);
+                info v = new info();
+                v.setVisible(true);
+        
+            }
+        
+            
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void textField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField3ActionPerformed
