@@ -1,13 +1,17 @@
 package Productores;
 
-import java.util.concurrent.Semaphore;
+import P1.Mattel;
 
 /**
  *
  * @author Daniel & Rommel
  */
 public class Cuerpos extends Productor {
-    public Cuerpos(Semaphore semaforo) {
-        super("Cuerpos", 15, 1f/3, semaforo);
+    public Cuerpos() {
+        super(Mattel.BUFFER.CUERPO.INDICE);
+    }
+    
+    protected void almacenar() {
+        Mattel.almacen_cuerpos += 1;
     }
 }
