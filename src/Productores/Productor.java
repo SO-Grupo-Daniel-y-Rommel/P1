@@ -1,6 +1,7 @@
 package Productores;
 
 import P1.Mattel;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
@@ -14,9 +15,11 @@ import static java.util.logging.Logger.getLogger;
 public abstract class Productor extends Thread {
     
     public long tiempo_producir;    // Tiempo necesario para producir (ms)
+    private int indice;
+    private boolean despedido = false;
     
     // vars para debug
-    protected static int[] counterIDs =  {1, 1, 1, 1};
+    protected static int[] counterIDs =  { 1, 1, 1, 1 };
     private int id;
     
     // Referencias a semaforos
@@ -25,6 +28,7 @@ public abstract class Productor extends Thread {
     private Semaphore semaforo_consumidor;  // Para saber cuantos espacios en almacen estan ocupados
     
     public Productor(int indice) {
+        this.indice = indice;
         
         id = counterIDs[indice];
         counterIDs[indice] += 1;
@@ -61,6 +65,9 @@ public abstract class Productor extends Thread {
                 semaforo_exclusion.release();      // Se sale de de SC
                 semaforo_consumidor.release();     // Se indica que un espacio se ocupo
                 
+                // Seccion Restante
+                if (this.despedido) this.retirarse();
+                
             } catch(InterruptedException ex) {
                 getLogger(Productor.class.getName()).log(SEVERE, null, ex);
             }
@@ -81,6 +88,22 @@ public abstract class Productor extends Thread {
         if (productor.equals("Cuerpos")) value = Mattel.almacen_cuerpos;
         
         System.out.println(productor + " #" + String.valueOf(id) + " | " + "Almacen de " + productor + ": " + String.valueOf(value));
+    }
+    
+    public void despedir() {
+        this.despedido = true;
+    }
+    
+    public void retirarse(){
+        // Lo quitamos del arreglo
+        Mattel.productores.get(this.indice).remove(0);
+        
+        // Mensaje
+        String productor = getClass().getName().split("\\.")[1];
+        System.out.println("Productor #" + String.valueOf(id) + " a sido despedido y se esta retirando");
+        
+        // paramos Ejecucion del hilo
+        this.stop();
     }
     
     // Metodos abstractos

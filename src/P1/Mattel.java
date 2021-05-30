@@ -188,10 +188,65 @@ public class Mattel {
        
         for (int i = 0; i < Mattel.ensambladores.size(); i++) {  // Ensambladores
             ensambladores.get(i).start();
-        
-        
-        
+        }
     }
+    
+    public static void contratarProductor(int productorIndice) {
+        Productor productor = null;
+        
+        if (productorIndice == Mattel.BUFFER.BOTON.INDICE) productor = new Botones();
+        if (productorIndice == Mattel.BUFFER.BRAZO.INDICE) productor = new Brazos();
+        if (productorIndice == Mattel.BUFFER.PIERNA.INDICE) productor = new Piernas();
+        if (productorIndice == Mattel.BUFFER.CUERPO.INDICE) productor = new Cuerpos();
+        
+        
+        if (productor == null) {
+            System.out.println("Error: no existe productor con indice " + productorIndice);
+            return;
+        }
+        
+        // Lo agregamos al arreglo global
+        productores.get(productorIndice).add(productor);
+        
+        // Comenzamos el hilo
+        productor.start();
+    }
+    
+    public static void despedirProductor(int productorIndice) {
+        List<Productor> productores;
+        
+        try {   // Para asegurarnos que existe un productor con este indice
+            productores = Mattel.productores.get(productorIndice);
+        } catch(Exception e) {
+            System.out.println("Error: no existe productor con indice " + productorIndice);
+            return;
+        }
+//        
+        if (productores.isEmpty()) {
+            System.out.println("Error: no hay productores de este tipo para despedir");
+            return;
+        }
+        
+        productores.get(0).despedir();
+    }
+    
+    public static void contratarEnsamblador() {
+        Ensamblador ensamblador = new Ensamblador();
+        
+        // Lo agregamos al arreglo global
+        ensambladores.add(ensamblador);
+        
+        // Comenzamos el hilo
+        ensamblador.start();
+    }
+    
+    public static void despedirEnsamblador() {
+        if (ensambladores.isEmpty()) {
+            System.out.println("Error: no hay ensambladores para despedir");
+            return;
+        }
+        
+        ensambladores.get(0).despedir();
     }
     
     public static String Lectura_Txt(){

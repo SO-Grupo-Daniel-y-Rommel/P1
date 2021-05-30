@@ -15,6 +15,7 @@ public class Ensamblador extends Thread {
     private int id;
     
     private long tiempo_asemblar;
+    private boolean despedido = false;
     
     private Semaphore[] semaforos_exclusion = new Semaphore[5];    // Para asegurar exclusion mutua al modiciar cantidadades almacen
     private Semaphore[] semaforos_productor = new Semaphore[4];    // Para saber cuantos espacios en cada almacen estan disponibles
@@ -27,8 +28,6 @@ public class Ensamblador extends Thread {
         tiempo_asemblar = (long) Math.ceil(
             Mattel.segundos_por_dia * (1000/Mattel.dias_para_asemblar)
         );
-        
-        System.out.println("hi");
         
         // Semaforos necesarios
         for (int i = 0; i < this.semaforos_exclusion.length; i++) {
@@ -85,6 +84,9 @@ public class Ensamblador extends Thread {
                 semaforos_exclusion[Mattel.BUFFER.PANAS.INDICE].release();
                 semaforos_consumidor[Mattel.BUFFER.PANAS.INDICE].release();
                 
+                // Seccion Restante
+                if (this.despedido) this.retirar();
+                
             } catch(InterruptedException ex) {
                 Logger.getLogger(Ensamblador.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -115,5 +117,19 @@ public class Ensamblador extends Thread {
         System.out.println("\n" + getClass().getName().split("\\.")[1] + " #" + id + " almaceno pana!");
         System.out.println("Almacen Panas: " + Mattel.almacen_panas + "\n");
     } 
+    
+    public void despedir() {
+        this.despedido = true;
+    }
+    
+    private void retirar() {
+        // Lo quitamos del arreglo
+        Mattel.ensambladores.remove(0);
+        
+        System.out.println("Ensamblador #" + String.valueOf(id) + " se esta retirando");
+        
+        // paramos Ejecucion del hilo
+        this.stop();
+    }
     
 }
