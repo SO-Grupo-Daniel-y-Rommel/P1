@@ -600,47 +600,52 @@ public class Inicio extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.out.println("Cargar data del txt");
         String data= Lectura_Txt();
-               
-        String [] info=data.split(",");
-        
-        this.textField1.setText(info[0]);
-        this.textField2.setText(info[1]);
-        this.textField3.setText(info[2]);
-        this.textField4.setText(info[3]);
-        this.textField5.setText(info[4]);
-        this.textField6.setText(info[5]);
-        this.jTextField1.setText(info[6]);
-        this.jTextField2.setText(info[7]);
-        this.jTextField3.setText(info[8]);
-        this.jTextField4.setText(info[9]);
-        this.jTextField5.setText(info[10]);
-        this.jTextField6.setText(info[11]);
+        System.out.println(data);
+        if(data.isBlank() || data.replace("\n", "").length()==0){
+            JOptionPane.showMessageDialog(this, "No es posible cargar data del txt");
+        }else{
+            
 
-        String p_piernas=this.textField1.getText();
-        String p_brazos=this.textField2.getText();
-        String p_cuerpoC=this.textField3.getText();
-        String p_botones=this.textField4.getText();
-        String ensambladores=this.textField5.getText();
-        String tiempo=this.textField6.getText();
-        String cant_d_entre_d=this.jTextField1.getText();
-        String max_piernas=this.jTextField2.getText();
-        String max_brazos=this.jTextField3.getText();
-        String max_cuerpoC=this.jTextField4.getText();
-        String max_botones=this.jTextField5.getText();
-        String max_ensambladores=this.jTextField6.getText();
-        Escritura_Txt(p_piernas,
-                              p_brazos,
-                              p_cuerpoC,
-                              p_botones,
-                              ensambladores,
-                              tiempo,
-                              cant_d_entre_d,
-                              max_piernas,
-                              max_brazos,
-                              max_cuerpoC,
-                              max_botones,
-                              max_ensambladores);
-        
+            String [] info=data.split(",");
+
+            this.textField1.setText(info[0]);
+            this.textField2.setText(info[1]);
+            this.textField3.setText(info[2]);
+            this.textField4.setText(info[3]);
+            this.textField5.setText(info[4]);
+            this.textField6.setText(info[5]);
+            this.jTextField1.setText(info[6]);
+            this.jTextField2.setText(info[7]);
+            this.jTextField3.setText(info[8]);
+            this.jTextField4.setText(info[9]);
+            this.jTextField5.setText(info[10]);
+            this.jTextField6.setText(info[11]);
+
+            String p_piernas=this.textField1.getText();
+            String p_brazos=this.textField2.getText();
+            String p_cuerpoC=this.textField3.getText();
+            String p_botones=this.textField4.getText();
+            String ensambladores=this.textField5.getText();
+            String tiempo=this.textField6.getText();
+            String cant_d_entre_d=this.jTextField1.getText();
+            String max_piernas=this.jTextField2.getText();
+            String max_brazos=this.jTextField3.getText();
+            String max_cuerpoC=this.jTextField4.getText();
+            String max_botones=this.jTextField5.getText();
+            String max_ensambladores=this.jTextField6.getText();
+            Escritura_Txt(p_piernas,
+                                  p_brazos,
+                                  p_cuerpoC,
+                                  p_botones,
+                                  ensambladores,
+                                  tiempo,
+                                  cant_d_entre_d,
+                                  max_piernas,
+                                  max_brazos,
+                                  max_cuerpoC,
+                                  max_botones,
+                                  max_ensambladores);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
