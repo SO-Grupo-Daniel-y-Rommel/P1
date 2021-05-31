@@ -441,11 +441,11 @@ public class info extends javax.swing.JFrame implements Runnable {
             
             
 //            ACTUALIZAR LABELS MAXIMA CANTIDAD DE PRODUCTORES
-            jLabel15.setText(String.valueOf(Mattel.cantidad_productores[2])+"/"+String.valueOf(Mattel.capacidad_productores[2]));
-            jLabel18.setText(String.valueOf(Mattel.cantidad_productores[1])+"/"+String.valueOf(Mattel.capacidad_productores[1]));
-            jLabel14.setText(String.valueOf(Mattel.cantidad_productores[0])+"/"+String.valueOf(Mattel.capacidad_productores[0]));
-            jLabel16.setText(String.valueOf(Mattel.cantidad_productores[3])+"/"+String.valueOf(Mattel.capacidad_productores[3]));
-            jLabel17.setText(String.valueOf(Mattel.cantidad_ensambladores)+"/"+String.valueOf(Mattel.capacidad_ensambladores));
+            jLabel15.setText(String.valueOf(Mattel.productores.get(2).size())+"/"+String.valueOf(Mattel.capacidad_productores[2]));
+            jLabel18.setText(String.valueOf(Mattel.productores.get(1).size())+"/"+String.valueOf(Mattel.capacidad_productores[1]));
+            jLabel14.setText(String.valueOf(Mattel.productores.get(0).size())+"/"+String.valueOf(Mattel.capacidad_productores[0]));
+            jLabel16.setText(String.valueOf(Mattel.productores.get(3).size())+"/"+String.valueOf(Mattel.capacidad_productores[3]));
+            jLabel17.setText(String.valueOf(Mattel.ensambladores.size())+"/"+String.valueOf(Mattel.capacidad_ensambladores));
             
             
             

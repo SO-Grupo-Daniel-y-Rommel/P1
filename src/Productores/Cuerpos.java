@@ -1,6 +1,5 @@
 package Productores;
 
-import imagines.Productor;
 import P1.Mattel;
 
 /**

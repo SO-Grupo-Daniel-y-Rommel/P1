@@ -5,7 +5,7 @@ import Productores.Botones;
 import Productores.Brazos;
 import Productores.Cuerpos;
 import Productores.Piernas;
-import imagines.Productor;
+import Productores.Productor;
 import java.io.File;
 import java.io.FileWriter;
 import static java.lang.System.out;
@@ -162,13 +162,10 @@ public class Mattel {
         for (int i = 0; i < cantidad_productores.length; i++) {
             List producers = new ArrayList<Productor>();
             for (int j = 0; j < cantidad_productores[i]; j++) {
-                switch(i) {
-                    // Por alguna razon java no me deja utilizar indices del ENUM
-                    case 0 : producers.add(new Botones()); 
-                    case 1 : producers.add(new Brazos());
-                    case 2 : producers.add(new Piernas());
-                    case 3 : producers.add(new Cuerpos());
-                }   
+                if (i == Mattel.BUFFER.BOTON.INDICE) producers.add(new Botones());
+                if (i == Mattel.BUFFER.BRAZO.INDICE) producers.add(new Brazos());
+                if (i == Mattel.BUFFER.PIERNA.INDICE) producers.add(new Piernas());
+                if (i == Mattel.BUFFER.CUERPO.INDICE) producers.add(new Cuerpos());
             }
             productores.add(producers);
         }

@@ -1,4 +1,4 @@
-package imagines;
+package Productores;
 
 import P1.Mattel;
 import java.util.List;
@@ -38,7 +38,7 @@ public abstract class Productor extends Thread {
             Mattel.segundos_por_dia * (1000/Mattel.productos_por_dia[indice])
         );
         
-        System.out.println(getClass().getName() + "#" + String.valueOf(id) + " Tiempo para producir: " + tiempo_producir + "ms");
+        System.out.println(getClass().getName().split("\\.")[1] + "#" + String.valueOf(id) + " Tiempo para producir: " + tiempo_producir + "ms");
         
         this.semaforo_exclusion = Mattel.semaforos_exclusion[indice];
         this.semaforo_productor = Mattel.semaforos_productor[indice];
