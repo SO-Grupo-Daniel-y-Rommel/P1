@@ -1,6 +1,12 @@
 Productores de piernas=4
-Productores de brazos=5
+Productores de brazos=4
 Productores de cuerpo central=4
 Productores de botones=4
-Ensambladores=5
+Ensambladores=1
 Tiempo=2
+Cantidad de dias entre despachos=5
+Maximo productores piernas=4
+Maximo productores brazos=4
+Maximo productores cuerpo central=4
+Maximo productores de botones=4
+Maximo ensambladores=4

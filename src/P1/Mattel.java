@@ -5,7 +5,7 @@ import Productores.Botones;
 import Productores.Brazos;
 import Productores.Cuerpos;
 import Productores.Piernas;
-import Productores.Productor;
+import imagines.Productor;
 import java.io.File;
 import java.io.FileWriter;
 import static java.lang.System.out;
@@ -79,7 +79,7 @@ public class Mattel {
     
     public static void main(String[] args) {
 
-
+        
         
         var frame1=new Inicio();
         frame1.setVisible(true);
@@ -100,7 +100,7 @@ public class Mattel {
         
         // Valores Iniciales:
         Mattel.segundos_por_dia = Integer.parseInt(info[5]);
-        Mattel.dias_entre_despachos = 10;
+        Mattel.dias_entre_despachos = Integer.parseInt(info[6]);
 
         Mattel.cantidad_ensambladores = Integer.parseInt(info[4]);
         Mattel.capacidad_ensambladores = 5;
@@ -113,7 +113,7 @@ public class Mattel {
         indice = BUFFER.BOTON.INDICE;
         Mattel.cantidad_productores[indice] = Integer.parseInt(info[3]);
         Mattel.capacidad_almacenes[indice] = 60;
-        Mattel.capacidad_productores[indice] = 4;
+        Mattel.capacidad_productores[indice] = Integer.parseInt(info[10]);
         Mattel.productos_por_dia[indice] = 4f;
         Mattel.unidades_requeridas[indice] = 8;
         
@@ -121,7 +121,7 @@ public class Mattel {
         indice = BUFFER.BRAZO.INDICE;
         Mattel.cantidad_productores[indice] = Integer.parseInt(info[1]);
         Mattel.capacidad_almacenes[indice] = 40;
-        Mattel.capacidad_productores[indice] = 5;
+        Mattel.capacidad_productores[indice] = Integer.parseInt(info[8]);
         Mattel.productos_por_dia[indice] = 1f;
         Mattel.unidades_requeridas[indice] = 2;
         
@@ -129,7 +129,7 @@ public class Mattel {
         indice = BUFFER.PIERNA.INDICE;
         Mattel.cantidad_productores[indice] = Integer.parseInt(info[0]);
         Mattel.capacidad_almacenes[indice] = 36;
-        Mattel.capacidad_productores[indice] = 4;
+        Mattel.capacidad_productores[indice] = Integer.parseInt(info[7]);
         Mattel.productos_por_dia[indice] = 1f/2;
         Mattel.unidades_requeridas[indice] = 2;
         
@@ -137,7 +137,7 @@ public class Mattel {
         indice = BUFFER.CUERPO.INDICE;
         Mattel.cantidad_productores[indice] = Integer.parseInt(info[2]);
         Mattel.capacidad_almacenes[indice] = 15;
-        Mattel.capacidad_productores[indice] = 4;
+        Mattel.capacidad_productores[indice] = Integer.parseInt(info[9]);
         Mattel.productos_por_dia[indice] = 1f/3;
         Mattel.unidades_requeridas[indice] = 1;
         
@@ -257,6 +257,12 @@ public class Mattel {
                 //Productores de botones=2
                 //Ensambladores=1
                 //Tiempo=10
+                //Maximo productores piernas=6
+                //Maximo productores brazos=8
+                //Maximo productores cuerpo central=5
+                //Maximo productores de botones=5
+                //Maximo ensambladores=5
+                
 
         
         	// Fichero del que queremos leer
@@ -319,10 +325,46 @@ public class Mattel {
     
     
     
-    public static void Escritura_Txt(String p_piernas,String p_brazos, String p_cuerpoC,String p_botones,String ensambladores,String tiempo){
+    public static void Escritura_Txt(String p_piernas,
+                                     String p_brazos, 
+                                     String p_cuerpoC,
+                                     String p_botones,
+                                     String ensambladores,
+                                     String tiempo,
+                                     String cant_d_entre_desp,
+                                     String max_piernas,
+                                     String max_brazos,
+                                     String max_cuerpoC,
+                                     String max_botones,
+                                     String max_ensambladores){
         
-        String[] info = { "Productores de piernas", "Productores de brazos","Productores de cuerpo central", "Productores de botones","Ensambladores","Tiempo"};
-        String[] value = { p_piernas,p_brazos, p_cuerpoC, p_botones, ensambladores, tiempo};
+        String[] info = { "Productores de piernas", 
+                          "Productores de brazos",
+                          "Productores de cuerpo central", 
+                          "Productores de botones",
+                          "Ensambladores",
+                          "Tiempo",
+                          "Cantidad de dias entre despachos",
+                           "Maximo productores piernas",
+                           "Maximo productores brazos",
+                           "Maximo productores cuerpo central",
+                           "Maximo productores de botones",
+                           "Maximo ensambladores"
+                        };
+        String[] value = { 
+                            p_piernas,
+                            p_brazos, 
+                            p_cuerpoC, 
+                            p_botones, 
+                            ensambladores, 
+                            tiempo,
+                            cant_d_entre_desp,
+                            max_piernas,
+                            max_brazos,
+                            max_cuerpoC,
+                            max_botones,
+                            max_ensambladores};
+        
         for (int i = 0; i < value.length; i++) {
             System.out.println(value[i]);
         }
@@ -361,7 +403,7 @@ public class Mattel {
     
     public static void cargar_data_default_txt(){
         
-        Escritura_Txt("4","5", "4", "4", "5", "2");
+        Escritura_Txt("4","5", "4", "4", "5", "2","1","4","5","4","4","5");
         
     }
 }
