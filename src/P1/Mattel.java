@@ -191,19 +191,26 @@ public class Mattel {
     public static void contratarProductor(int productorIndice) {
         Productor productor = null;
         
-        if (productorIndice == Mattel.BUFFER.BOTON.INDICE) productor = new Botones();
-        if (productorIndice == Mattel.BUFFER.BRAZO.INDICE) productor = new Brazos();
-        if (productorIndice == Mattel.BUFFER.PIERNA.INDICE) productor = new Piernas();
-        if (productorIndice == Mattel.BUFFER.CUERPO.INDICE) productor = new Cuerpos();
+        if (productorIndice == BUFFER.BOTON.INDICE) productor = new Botones();
+        if (productorIndice == BUFFER.BRAZO.INDICE) productor = new Brazos();
+        if (productorIndice == BUFFER.PIERNA.INDICE) productor = new Piernas();
+        if (productorIndice == BUFFER.CUERPO.INDICE) productor = new Cuerpos();
         
         
         if (productor == null) {
-            System.out.println("Error: no existe productor con indice " + productorIndice);
+            System.out.println("\nERROR: no existe productor con indice " + productorIndice + "\n");
+            return;
+        }
+        
+        List producers = productores.get(productorIndice);
+        
+        if (producers.size() + 1 > Mattel.capacidad_productores[productorIndice]) {
+            System.out.println("\nERROR: capacidad de productor alcanzada. No se puede agregar mas\n");
             return;
         }
         
         // Lo agregamos al arreglo global
-        productores.get(productorIndice).add(productor);
+        producers.add(productor);
         
         // Comenzamos el hilo
         productor.start();
@@ -228,6 +235,11 @@ public class Mattel {
     }
     
     public static void contratarEnsamblador() {
+        
+        if (ensambladores.size() + 1 > capacidad_ensambladores) {
+            System.out.println("\nERROR: capacidad de ensambladores alcanzado. No se puede agregar mas\n");
+        }
+        
         Ensamblador ensamblador = new Ensamblador();
         
         // Lo agregamos al arreglo global
@@ -239,7 +251,7 @@ public class Mattel {
     
     public static void despedirEnsamblador() {
         if (ensambladores.isEmpty()) {
-            System.out.println("Error: no hay ensambladores para despedir");
+            System.out.println("\nERROR: no hay ensambladores para despedir\n");
             return;
         }
         
@@ -399,7 +411,7 @@ public class Mattel {
 	}
     
     public static void cargar_data_default_txt(){
-        
+        // TODO: cambiar para coincidir con enunciado
         Escritura_Txt("4","5", "4", "4", "5", "2","1","4","5","4","4","5");
         
     }
