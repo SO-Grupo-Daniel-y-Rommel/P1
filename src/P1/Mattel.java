@@ -1,6 +1,8 @@
 package P1;
 
 import Consumidores.Ensamblador;
+import Empleados.Gerente;
+import Empleados.Jefe;
 import Productores.Botones;
 import Productores.Brazos;
 import Productores.Cuerpos;
@@ -71,8 +73,22 @@ public class Mattel {
     public static volatile int almacen_piernas = 0;
     public static volatile int almacen_cuerpos = 0;
     public static volatile int almacen_panas = 0;
+    
+
+
+//  Variables de jefe y gerente   
+    public static Semaphore semaforo_exclusion_dias=new Semaphore(1);
     public static volatile int contador_dias = 0;
-  
+    public static volatile int dias_restantes=8;
+    public static volatile int panas_entregados=0;
+    public static volatile String chief_status="Dormido";
+    public static volatile String ger_status="Dormido";
+    public static volatile int tiempo_entrega = 8000;
+    public static volatile int tiempo_dormir = 8000;
+    public static volatile int tiempo_chief_pasar_dias = 8000;
+    
+    
+    
     // NOTA: intente hacer esto con arreglos pero arreglo de java no son dinamicos :(
     public static List<List<Productor>> productores;
     public static List<Ensamblador> ensambladores;
@@ -142,6 +158,8 @@ public class Mattel {
         Mattel.unidades_requeridas[indice] = 1;
         
         // Inizializacion de Semaforos
+        semaforo_exclusion_dias=new Semaphore(1);
+        
         for (int i = 0; i < semaforos_exclusion.length; i++) {
             semaforos_exclusion[i] = new Semaphore(1);
         }
@@ -176,6 +194,12 @@ public class Mattel {
         }
         
         // Comenzamos cada thread
+        Jefe chief= new Jefe();
+        chief.start();
+        
+        Gerente ger= new Gerente();
+        ger.start();
+        
         for (int i = 0; i < Mattel.productores.size(); i++) {   // Productores
             List<Productor> productorArr = Mattel.productores.get(i);
             for (int j = 0; j < productorArr.size(); j++) {

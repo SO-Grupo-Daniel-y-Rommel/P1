@@ -9,4 +9,4 @@ Maximo productores piernas=4
 Maximo productores brazos=5
 Maximo productores cuerpo central=4
 Maximo productores de botones=4
-Maximo ensambladores=22
+Maximo ensambladores=5
