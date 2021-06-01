@@ -103,7 +103,7 @@ public class Mattel {
         Mattel.dias_entre_despachos = Integer.parseInt(info[6]);
 
         Mattel.cantidad_ensambladores = Integer.parseInt(info[4]);
-        Mattel.capacidad_ensambladores = 5;
+        Mattel.capacidad_ensambladores = Integer.parseInt(info[11]);
         Mattel.dias_para_asemblar = 1f;
         
         

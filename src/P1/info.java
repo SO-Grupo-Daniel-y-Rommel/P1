@@ -437,7 +437,7 @@ public class info extends javax.swing.JFrame implements Runnable {
             jLabel20.setText(String.valueOf(Mattel.almacen_brazos)+"/"+Mattel.capacidad_almacenes[1]);
             jLabel19.setText(String.valueOf(Mattel.almacen_botones)+"/"+Mattel.capacidad_almacenes[0]);
             jLabel21.setText(String.valueOf(Mattel.almacen_cuerpos)+"/"+Mattel.capacidad_almacenes[3]);
-            jLabel23.setText(String.valueOf(Mattel.almacen_panas)+"/");
+            jLabel23.setText(String.valueOf(Mattel.almacen_panas)+"/"+"maximo");
             
             
 //            ACTUALIZAR LABELS MAXIMA CANTIDAD DE PRODUCTORES
