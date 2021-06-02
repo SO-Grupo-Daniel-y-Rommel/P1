@@ -25,15 +25,14 @@ public class Mattel {
     
     // Datos Globales de Simulacion
     public static int segundos_por_dia;
-    public static int dias_entre_despachos;
     
     /* Formato de arreglos:
      * i = 0 -> Botones
      * i = 1 -> Brazos
      * i = 2 -> Piernas
      * i = 3 -> Cuerpos
-     * i = 4 -> Contador de dias
-     * i = 5 -> Panas
+     * i = 4 -> Panas
+     * i = 5 -> Contador de dias
      */
     public static enum BUFFER {
         BOTON(0),
@@ -53,7 +52,7 @@ public class Mattel {
     // Capacidades, Cantidades & Requisitos
     public static int cantidad_ensambladores;
     public static int capacidad_ensambladores;
-    public static float dias_para_asemblar;
+    public static float dias_para_ensamblar;
     public static int[] capacidad_almacenes = new int[4];
     public static int[] cantidad_productores = new int[4];
     public static int[] capacidad_productores = new int[4];
@@ -73,37 +72,29 @@ public class Mattel {
     public static volatile int almacen_piernas = 0;
     public static volatile int almacen_cuerpos = 0;
     public static volatile int almacen_panas = 0;
-    
+    public static volatile int contador_dias;
 
 
-//  Variables de jefe y gerente   
-    public static Semaphore semaforo_exclusion_dias=new Semaphore(1);
-    public static volatile int contador_dias = 0;
-    public static volatile int dias_restantes=8;
-    public static volatile int panas_entregados=0;
-    public static volatile String chief_status="Dormido";
-    public static volatile String ger_status="Dormido";
-    public static volatile int tiempo_entrega = 8000;
-    public static volatile int tiempo_dormir = 8000;
-    public static volatile int tiempo_chief_pasar_dias = 8000;
+//  Variables de jefe y gerente
+    public static int dias_transcurridos = 0;
+    public static int dias_entre_despachos;
+    public static int panas_entregados = 0;
+    public static String jefe_estado = "Dormido";
+    public static String gerente_estado = "Dormido";
+    public static int tiempo_entrega = 0;
     
-    
+    // TODO: nose si estos valores se ponen en el txt tambien...
+    public static float horas_por_dia_dormir_gerente = 8f/24;
+    public static float horas_por_dia_dormir_jefe = 8f/24;
+    public static float horas_por_dia_decrementar_contador = 8f/24;
     
     // NOTA: intente hacer esto con arreglos pero arreglo de java no son dinamicos :(
     public static List<List<Productor>> productores;
     public static List<Ensamblador> ensambladores;
     
     public static void main(String[] args) {
-
-        
-        
-        var frame1=new Inicio();
+        var frame1 = new Inicio();
         frame1.setVisible(true);
-        
-        
-//        =================================================================
- 
-   
     }
 
     
@@ -116,11 +107,13 @@ public class Mattel {
         
         // Valores Iniciales:
         Mattel.segundos_por_dia = Integer.parseInt(info[5]);
+        System.out.println("SEGUNDOS: " + segundos_por_dia);
         Mattel.dias_entre_despachos = Integer.parseInt(info[6]);
+        Mattel.contador_dias = dias_entre_despachos;
 
         Mattel.cantidad_ensambladores = Integer.parseInt(info[4]);
         Mattel.capacidad_ensambladores = Integer.parseInt(info[11]);
-        Mattel.dias_para_asemblar = 1f;
+        Mattel.dias_para_ensamblar = 1f;
         
         
         int indice;
@@ -158,8 +151,6 @@ public class Mattel {
         Mattel.unidades_requeridas[indice] = 1;
         
         // Inizializacion de Semaforos
-        semaforo_exclusion_dias=new Semaphore(1);
-        
         for (int i = 0; i < semaforos_exclusion.length; i++) {
             semaforos_exclusion[i] = new Semaphore(1);
         }
@@ -194,11 +185,11 @@ public class Mattel {
         }
         
         // Comenzamos cada thread
-        Jefe chief= new Jefe();
-        chief.start();
+        Jefe jefe = new Jefe();
+        jefe.start();
         
-        Gerente ger= new Gerente();
-        ger.start();
+        Gerente gerente = new Gerente();
+        gerente.start();
         
         for (int i = 0; i < Mattel.productores.size(); i++) {   // Productores
             List<Productor> productorArr = Mattel.productores.get(i);
@@ -262,6 +253,7 @@ public class Mattel {
         
         if (ensambladores.size() + 1 > capacidad_ensambladores) {
             System.out.println("\nERROR: capacidad de ensambladores alcanzado. No se puede agregar mas\n");
+            return;
         }
         
         Ensamblador ensamblador = new Ensamblador();

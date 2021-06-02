@@ -22,11 +22,11 @@ public class info extends javax.swing.JFrame implements Runnable {
     /** Creates new form info */
     
     public info() {
-        initComponents();        
+        initComponents();       
+        Mattel.simulacion();
         h1=new Thread(this);
         h1.start();
         setLocationRelativeTo(null);
-//        Mattel.simulacion();
     }
     public void validar_no_text(java.awt.event.KeyEvent evento) {//Método para validar solo números
           evento.consume();
@@ -490,9 +490,6 @@ public class info extends javax.swing.JFrame implements Runnable {
         int i=0;
         
         
-        Mattel.simulacion();
-        
-        
         while (ct==h1){
             
 //            ACTUALIZAR LABEL CANTIDAD DE PRODUCTOS EN EL ALMACEN
@@ -500,7 +497,7 @@ public class info extends javax.swing.JFrame implements Runnable {
             jLabel20.setText(String.valueOf(Mattel.almacen_brazos)+"/"+Mattel.capacidad_almacenes[1]);
             jLabel19.setText(String.valueOf(Mattel.almacen_botones)+"/"+Mattel.capacidad_almacenes[0]);
             jLabel21.setText(String.valueOf(Mattel.almacen_cuerpos)+"/"+Mattel.capacidad_almacenes[3]);
-            jLabel23.setText(String.valueOf(Mattel.almacen_panas)+"/"+"maximo");
+            jLabel23.setText(String.valueOf(Mattel.almacen_panas)+"/"+"∞");
             
             
 //            ACTUALIZAR LABELS MAXIMA CANTIDAD DE PRODUCTORES
@@ -513,14 +510,15 @@ public class info extends javax.swing.JFrame implements Runnable {
             
             
 //            ACTUALIZAR LABELS RELACIONADOS AL JEFE Y EL GERENTE
-            jLabel13.setText("Estado del Jefe: "+String.valueOf(Mattel.chief_status));
-            jLabel25.setText("Estado del Gerente: "+String.valueOf(Mattel.ger_status));
-            jLabel27.setText("Dias transcurridos: "+String.valueOf(Mattel.contador_dias));
-            jLabel29.setText("Dias para la proxima entrega: "+String.valueOf(Mattel.dias_restantes));
+            jLabel13.setText("Estado del Jefe: "+String.valueOf(Mattel.jefe_estado));
+            jLabel25.setText("Estado del Gerente: "+String.valueOf(Mattel.gerente_estado));
+            
+            jLabel27.setText("Dias totales transcurridos: "+String.valueOf(Mattel.dias_transcurridos));
+            jLabel29.setText("Dias para la proxima entrega: "+String.valueOf(Mattel.contador_dias));
             jLabel28.setText("Panas entregados: "+String.valueOf(Mattel.panas_entregados));
             
             try {
-                Thread.sleep(1000);
+                Thread.sleep(250);
             } catch (InterruptedException ex) {
             }
         }

@@ -13,20 +13,15 @@ import java.util.logging.Logger;
 public class Jefe extends Thread{
     
     
-    public String estado;
+    public long tiempo_dormir = (long) Math.ceil(
+            Mattel.segundos_por_dia * 1000 * Mattel.horas_por_dia_dormir_jefe
+    );
     
-    // Constantes ??????????????????????????
-//    public float tiempo_para_decrementar = 8f/24;   // 8 horas cambiando decrementando contador
-//    public float tiempo_en_reposo = 24f - this.tiempo_para_decrementar; // resto del dia en reposo
- 
-    //Semaforo
-    private Semaphore semaforo_exclusion_jefeGerente = Mattel.semaforo_exclusion_dias;    // Para asegurar exclusion mutua al modiciar el contador de los dias
+    public long tiempo_pasar_dia = (long) Math.ceil(
+            Mattel.segundos_por_dia * 1000 * Mattel.horas_por_dia_decrementar_contador
+    );
     
-    
-    public Jefe(){
-        
-        
-    }
+    public Jefe(){ }
     
     @Override
     public void run() {
@@ -34,21 +29,16 @@ public class Jefe extends Thread{
             try{
                 
                 // Seccion Entrada
-                semaforo_exclusion_jefeGerente.acquire();
-                
+                Mattel.semaforos_exclusion[Mattel.BUFFER.CONTADOR.INDICE].acquire();
                 
                 //Seccion critica
-                // ===> pasar el dia
                 pasar_dias();
                 
-                
                 //Seccion Salida
-                semaforo_exclusion_jefeGerente.release();
+                Mattel.semaforos_exclusion[Mattel.BUFFER.CONTADOR.INDICE].release();
+                
+                // Seccion Restante
                 dormir();
-                
-                
-                
-                
                 
             } catch(InterruptedException ex) {
                 Logger.getLogger(Ensamblador.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,20 +47,14 @@ public class Jefe extends Thread{
     }
     
     public void dormir() throws InterruptedException{
-        Mattel.chief_status="Dormido";
-        Thread.sleep(Mattel.tiempo_dormir);
+        Mattel.jefe_estado = "Dormido";
+        Thread.sleep(tiempo_dormir);
     }
-    
     
     public void pasar_dias() throws InterruptedException{
-        Mattel.chief_status="Activo";
-        Mattel.contador_dias += 1;
-        Mattel.dias_restantes -= 1;
-        Thread.sleep(Mattel.tiempo_chief_pasar_dias);
-        
+        Mattel.jefe_estado="Activo";
+        Thread.sleep(tiempo_pasar_dia);
+        Mattel.dias_transcurridos += 1;
+        Mattel.contador_dias -= 1;
     }
-    
-    
-    
-    
 }
