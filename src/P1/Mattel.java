@@ -89,7 +89,6 @@ public class Mattel {
     
     
     
-    // NOTA: intente hacer esto con arreglos pero arreglo de java no son dinamicos :(
     public static List<List<Productor>> productores;
     public static List<Ensamblador> ensambladores;
     

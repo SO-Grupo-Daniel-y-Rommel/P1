@@ -15,9 +15,6 @@ public class Jefe extends Thread{
     
     public String estado;
     
-    // Constantes ??????????????????????????
-//    public float tiempo_para_decrementar = 8f/24;   // 8 horas cambiando decrementando contador
-//    public float tiempo_en_reposo = 24f - this.tiempo_para_decrementar; // resto del dia en reposo
  
     //Semaforo
     private Semaphore semaforo_exclusion_jefeGerente = Mattel.semaforo_exclusion_dias;    // Para asegurar exclusion mutua al modiciar el contador de los dias
@@ -45,8 +42,6 @@ public class Jefe extends Thread{
                 //Seccion Salida
                 semaforo_exclusion_jefeGerente.release();
                 dormir();
-                
-                
                 
                 
                 
