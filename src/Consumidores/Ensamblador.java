@@ -26,7 +26,7 @@ public class Ensamblador extends Thread {
         counterID += 1;
         
         tiempo_asemblar = (long) Math.ceil(
-            Mattel.segundos_por_dia * (1000/Mattel.dias_para_asemblar)
+            Mattel.segundos_por_dia * (1000/Mattel.dias_para_ensamblar)
         );
         
         // Semaforos necesarios

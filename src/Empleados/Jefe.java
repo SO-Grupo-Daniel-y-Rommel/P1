@@ -13,13 +13,16 @@ import java.util.logging.Logger;
 public class Jefe extends Thread{
     
     
-    public String estado;
+    public long tiempo_dormir = (long) Math.ceil(
+            Mattel.segundos_por_dia * 1000 * Mattel.horas_por_dia_dormir_jefe
+    );
     
- 
-    //Semaforo
-    private Semaphore semaforo_exclusion_jefeGerente = Mattel.semaforo_exclusion_dias;    // Para asegurar exclusion mutua al modiciar el contador de los dias
+
+    public long tiempo_pasar_dia = (long) Math.ceil(
+            Mattel.segundos_por_dia * 1000 * Mattel.horas_por_dia_decrementar_contador
+    );
     
-    
+  
     public Jefe(){
         
         
@@ -31,7 +34,7 @@ public class Jefe extends Thread{
             try{
                 
                 // Seccion Entrada
-                semaforo_exclusion_jefeGerente.acquire();
+                Mattel.semaforos_exclusion[Mattel.BUFFER.CONTADOR.INDICE].acquire();
                 
                 
                 //Seccion critica
@@ -40,7 +43,9 @@ public class Jefe extends Thread{
                 
                 
                 //Seccion Salida
-                semaforo_exclusion_jefeGerente.release();
+                Mattel.semaforos_exclusion[Mattel.BUFFER.CONTADOR.INDICE].release();
+                
+                // Seccion Restante
                 dormir();
                 
                 
@@ -52,17 +57,16 @@ public class Jefe extends Thread{
     }
     
     public void dormir() throws InterruptedException{
-        Mattel.chief_status="Dormido";
-        Thread.sleep(Mattel.tiempo_dormir);
+        Mattel.jefe_estado = "Durmiendo";
+        Thread.sleep(tiempo_dormir);
     }
     
     
     public void pasar_dias() throws InterruptedException{
-        Mattel.chief_status="Activo";
-        Mattel.contador_dias += 1;
-        Mattel.dias_restantes -= 1;
-        Thread.sleep(Mattel.tiempo_chief_pasar_dias);
-        
+        Mattel.jefe_estado = "Cambiando counter";
+        Thread.sleep(tiempo_pasar_dia);
+        Mattel.dias_transcurridos += 1;
+        Mattel.contador_dias -= 1;
     }
     
     

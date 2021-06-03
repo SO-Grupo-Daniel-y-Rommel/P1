@@ -2,7 +2,6 @@ package Empleados;
 
 import Consumidores.Ensamblador;
 import P1.Mattel;
-import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,56 +11,35 @@ import java.util.logging.Logger;
  */
 public class Gerente extends Thread{
     
-    public Jefe jefe;
+    public long tiempo_dormir = (long) Math.ceil(
+            Mattel.segundos_por_dia * 1000 * Mattel.horas_por_dia_dormir_gerente
+    );
     
-    public float tiempo_en_reposo = 8f/24;  // 8 horas
-    
-    
-    
-    
-    //Semaforo
-    private Semaphore semaforo_exclusion_jefeGerente = Mattel.semaforo_exclusion_dias;    // Para asegurar exclusion mutua al modiciar el contador de los dias
-    
-    
-    public Gerente(){
-        
-       
-    }
+    public Gerente(){ }
     
     @Override
     public void run() {
         while(true) {
             try{
                 
-                
+                despertar();
                 
                 //Seccion Entrada
-                despertar(); 
-                semaforo_exclusion_jefeGerente.acquire();
+                Mattel.semaforos_exclusion[Mattel.BUFFER.CONTADOR.INDICE].acquire();
                 Mattel.semaforos_exclusion[Mattel.BUFFER.PANAS.INDICE].acquire();
-                   
                 
-                if(Mattel.dias_restantes==0){
-                    
-                    
-                    
-                    
-                    //Seccion Critica
+                //Seccion Critica
+                if (Mattel.contador_dias == 0){
                     realizar_entrega();
-                    
-                    
                     //Volver a esperar 8 dias para la realizar una entrega
                     reiniciar_dias_para_entrega();
-                
-                    
                 }
-                
                 
                 //Seccion Salida
                 Mattel.semaforos_exclusion[Mattel.BUFFER.PANAS.INDICE].release();
-                semaforo_exclusion_jefeGerente.release();
+                Mattel.semaforos_exclusion[Mattel.BUFFER.CONTADOR.INDICE].release();
 
-                
+                // Seccion Restante
                 dormir();
                 
                 
@@ -72,25 +50,24 @@ public class Gerente extends Thread{
     }
     
     public void realizar_entrega() throws InterruptedException{
-        Mattel.ger_status="Activo";
-        int n_panas=Mattel.almacen_panas;
-        Mattel.almacen_panas=0;
+        Mattel.gerente_estado = "Entregando Panas";
+        int n_panas = Mattel.almacen_panas;
+        Mattel.almacen_panas = 0;
         Thread.sleep(Mattel.tiempo_entrega);
-        Mattel.panas_entregados+=n_panas;
+        Mattel.panas_entregados += n_panas;
     }
     
     public void reiniciar_dias_para_entrega() {
-        Mattel.dias_restantes = 8;
+        Mattel.contador_dias = Mattel.dias_entre_despachos;
     }
     
     public void dormir() throws InterruptedException{
-        Mattel.ger_status="Dormido";
-        Thread.sleep(Mattel.tiempo_dormir);
+        Mattel.gerente_estado = "Durmiendo";
+        Thread.sleep(tiempo_dormir);
     }
     
     public void despertar() throws InterruptedException{
-        Mattel.ger_status="Activo";
-//        Thread.sleep(3);
+        Mattel.gerente_estado = "Intentando Leer Contador";
         
     }
     
