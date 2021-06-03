@@ -15,7 +15,7 @@ public class Ensamblador extends Thread {
     private int id;
     
     private long tiempo_asemblar;
-    private boolean despedido = false;
+    public boolean despedido = false;
     
     private Semaphore[] semaforos_exclusion = new Semaphore[5];    // Para asegurar exclusion mutua al modiciar cantidadades almacen
     private Semaphore[] semaforos_productor = new Semaphore[4];    // Para saber cuantos espacios en cada almacen estan disponibles
@@ -100,11 +100,11 @@ public class Ensamblador extends Thread {
         Mattel.almacen_cuerpos -= Mattel.unidades_requeridas[Mattel.BUFFER.CUERPO.INDICE];
         
         
-        System.out.println("\n" + getClass().getName().split("\\.")[1] + " #" + id + " recolecto partes para pana!");
-        System.out.println("Almacen Botones: " + Mattel.almacen_botones);
-        System.out.println("Almacen Brazos: " + Mattel.almacen_brazos);
-        System.out.println("Almacen Botones: " + Mattel.almacen_piernas);
-        System.out.println("Almacen Botones: " + Mattel.almacen_cuerpos + "\n");
+//        System.out.println("\n" + getClass().getName().split("\\.")[1] + " #" + id + " recolecto partes para pana!");
+//        System.out.println("Almacen Botones: " + Mattel.almacen_botones);
+//        System.out.println("Almacen Brazos: " + Mattel.almacen_brazos);
+//        System.out.println("Almacen Botones: " + Mattel.almacen_piernas);
+//        System.out.println("Almacen Botones: " + Mattel.almacen_cuerpos + "\n");
         
     }
     
@@ -114,8 +114,8 @@ public class Ensamblador extends Thread {
     
     private void almacenar() {
         Mattel.almacen_panas += 1;
-        System.out.println("\n" + getClass().getName().split("\\.")[1] + " #" + id + " almaceno pana!");
-        System.out.println("Almacen Panas: " + Mattel.almacen_panas + "\n");
+//        System.out.println("\n" + getClass().getName().split("\\.")[1] + " #" + id + " almaceno pana!");
+//        System.out.println("Almacen Panas: " + Mattel.almacen_panas + "\n");
     } 
     
     public void despedir() {
@@ -126,7 +126,8 @@ public class Ensamblador extends Thread {
         // Lo quitamos del arreglo
         Mattel.ensambladores.remove(0);
         
-        System.out.println("Ensamblador #" + String.valueOf(id) + " se esta retirando");
+        // Mensaje
+        System.out.println("Ensamblador #" + String.valueOf(id) + " se retiro");
         
         // paramos Ejecucion del hilo
         this.stop();

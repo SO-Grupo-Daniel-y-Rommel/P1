@@ -107,7 +107,6 @@ public class Mattel {
         
         // Valores Iniciales:
         Mattel.segundos_por_dia = Integer.parseInt(info[5]);
-        System.out.println("SEGUNDOS: " + segundos_por_dia);
         Mattel.dias_entre_despachos = Integer.parseInt(info[6]);
         Mattel.contador_dias = dias_entre_despachos;
 
@@ -246,6 +245,13 @@ public class Mattel {
             return;
         }
         
+        if (productores.get(0).despedido) {
+            System.out.println("\nERROR: tienes que esperar que se retire el productor que despediste\n");
+            return;
+        }
+        
+        System.out.println("Productor se despidio. Terminara lo que esta haciendo para retirase!");
+        
         productores.get(0).despedir();
     }
     
@@ -271,6 +277,12 @@ public class Mattel {
             return;
         }
         
+        if (ensambladores.get(0).despedido) {
+            System.out.println("\nERROR: tienes que esperar que se retire el ensamblador que despediste\n");
+            return;
+        }
+        
+        System.out.println("Ensamblador se despidio. Terminara lo que esta haciendo para retirase!");
         ensambladores.get(0).despedir();
     }
     

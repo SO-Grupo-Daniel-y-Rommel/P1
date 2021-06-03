@@ -16,7 +16,7 @@ public abstract class Productor extends Thread {
     
     public long tiempo_producir;    // Tiempo necesario para producir (ms)
     private int indice;
-    private boolean despedido = false;
+    public boolean despedido = false;
     
     // vars para debug
     protected static int[] counterIDs =  { 1, 1, 1, 1 };
@@ -38,7 +38,7 @@ public abstract class Productor extends Thread {
             Mattel.segundos_por_dia * (1000/Mattel.productos_por_dia[indice])
         );
         
-        System.out.println(getClass().getName().split("\\.")[1] + "#" + String.valueOf(id) + " Tiempo para producir: " + tiempo_producir + "ms");
+//        System.out.println(getClass().getName().split("\\.")[1] + "#" + String.valueOf(id) + " Tiempo para producir: " + tiempo_producir + "ms");
         
         this.semaforo_exclusion = Mattel.semaforos_exclusion[indice];
         this.semaforo_productor = Mattel.semaforos_productor[indice];
@@ -59,7 +59,7 @@ public abstract class Productor extends Thread {
                 
                 // Seccion Critica
                 almacenar();
-                printChange();
+//                printChange();
                 
                 // Seccion Salida
                 semaforo_exclusion.release();      // Se sale de de SC
@@ -100,7 +100,7 @@ public abstract class Productor extends Thread {
         
         // Mensaje
         String productor = getClass().getName().split("\\.")[1];
-        System.out.println("Productor #" + String.valueOf(id) + " a sido despedido y se esta retirando");
+        System.out.println("Productor #" + String.valueOf(id) + " se retiro");
         
         // paramos Ejecucion del hilo
         this.stop();
