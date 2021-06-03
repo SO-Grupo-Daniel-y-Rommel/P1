@@ -513,7 +513,7 @@ public class info extends javax.swing.JFrame implements Runnable {
             jLabel28.setText("Panas entregados: "+String.valueOf(Mattel.panas_entregados));
             
             try {
-                Thread.sleep(250);
+                Thread.sleep(100);
             } catch (InterruptedException ex) {
             }
         }
