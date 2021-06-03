@@ -81,7 +81,7 @@ public class Mattel {
     public static int panas_entregados = 0;
     public static String jefe_estado = "Dormido";
     public static String gerente_estado = "Dormido";
-    public static int tiempo_entrega = 0;
+    public static int tiempo_entrega = 1000;
     
     // TODO: nose si estos valores se ponen en el txt tambien...
     public static float horas_por_dia_dormir_gerente = 8f/24;

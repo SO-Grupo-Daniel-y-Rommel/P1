@@ -27,6 +27,7 @@ public class Jefe extends Thread{
     public void run() {
         while(true) {
             try{
+                despertar();
                 
                 // Seccion Entrada
                 Mattel.semaforos_exclusion[Mattel.BUFFER.CONTADOR.INDICE].acquire();
@@ -46,13 +47,17 @@ public class Jefe extends Thread{
         }
     }
     
+    public void despertar () throws InterruptedException {
+        Mattel.jefe_estado = "Intentando cambiar counter";
+    }
+    
     public void dormir() throws InterruptedException{
-        Mattel.jefe_estado = "Dormido";
+        Mattel.jefe_estado = "Durmiendo";
         Thread.sleep(tiempo_dormir);
     }
     
     public void pasar_dias() throws InterruptedException{
-        Mattel.jefe_estado="Activo";
+        Mattel.jefe_estado = "Cambiando counter";
         Thread.sleep(tiempo_pasar_dia);
         Mattel.dias_transcurridos += 1;
         Mattel.contador_dias -= 1;

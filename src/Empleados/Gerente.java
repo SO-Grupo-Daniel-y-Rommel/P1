@@ -2,7 +2,6 @@ package Empleados;
 
 import Consumidores.Ensamblador;
 import P1.Mattel;
-import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,8 +50,8 @@ public class Gerente extends Thread{
     }
     
     public void realizar_entrega() throws InterruptedException{
-        Mattel.gerente_estado = "Activo";
-        int n_panas=Mattel.almacen_panas;
+        Mattel.gerente_estado = "Entregando Panas";
+        int n_panas = Mattel.almacen_panas;
         Mattel.almacen_panas = 0;
         Thread.sleep(Mattel.tiempo_entrega);
         Mattel.panas_entregados += n_panas;
@@ -63,12 +62,12 @@ public class Gerente extends Thread{
     }
     
     public void dormir() throws InterruptedException{
-        Mattel.gerente_estado = "Dormido";
+        Mattel.gerente_estado = "Durmiendo";
         Thread.sleep(tiempo_dormir);
     }
     
     public void despertar() throws InterruptedException{
-        Mattel.gerente_estado="Activo";
+        Mattel.gerente_estado = "Intentando Leer Contador";
         
     }
     
